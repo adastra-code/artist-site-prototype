@@ -2,7 +2,7 @@
 
 **Дата проверки:** 15.10.2026
 **Критерии успеха:** продажи/заказы и трафик/видимость в поиске.
-**Выборка:** 28 сайтов — звёзды музейного уровня, современные галерейные авторы,
+**Выборка:** 37 сайтов — звёзды музейного уровня, современные галерейные авторы,
 независимые/коммерческие художницы и иллюстраторы.
 
 > Оговорки: просмотры Википедии — это спрос **по имени**, а не посещаемость сайта.
@@ -35,6 +35,7 @@
 | lisacongdon.com | Shopify | ✅ корзина | — | 300 |
 | gemmacorrell.com | Shopify | ✅ корзина | ✅ | 248 |
 | laurieanderson.com | WordPress | ✅ товары | ✅ | 27 181 |
+| tschabalalaself.com | WordPress | ✅ магазин | — | 903 |
 | chloewise.com | — | ✅ магазин проекта | — | 706 |
 | loish.net | WordPress | портфолио + монетизация вне сайта (Patreon/издания) | — | — |
 
@@ -60,6 +61,7 @@
 | laurenquin.com | WordPress | ✅ / — | — |
 | helendardik.com | Squarespace | ✅ / — | — |
 | emilymaesmith.com | Cargo | ✅ / — | 265 |
+| pipilottirist.net | — | ✅ / — | 1 915 |
 | yayoi-kusama.jp | WordPress, ja/en | ✅ (новости, выставки, книги) | 54 113 |
 | hilmaafklint.se | WordPress (фонд) | ✅ | 17 726 |
 
@@ -81,6 +83,7 @@
 | marlenedumas.com | 🔴 домен припаркован («domain reserved») | — |
 | shirin-neshat.com | 🔴 домена нет (только галерея) | 2 424 |
 | amysherald.com | 🔴 домена нет | 7 470 |
+| tanyashulz.com | 🔴 домен не отвечает | — |
 | karawalker.com | 🟠 «Coming soon» | — |
 | lornasimpson.com | 🟠 «Coming soon» | 1 433 |
 | rinekedijkstra.com | 🟠 пустой HTML без viewport | 617 |
