@@ -112,7 +112,10 @@ $langs      </nav>
 
 function Get-Footer {
     $email = Esc $t.site.email
-    $inst  = Esc $t.site.instagram
+    # Телефон и соцсети выводятся только если заполнены в content/ru.json.
+    $extra = ''
+    if ($t.site.phone)     { $extra += "          <p>$(Esc $t.site.phone)</p>`n" }
+    if ($t.site.instagram) { $extra += "          <p><a href=""https://instagram.com/"">$(Esc $t.site.instagram)</a></p>`n" }
     return @"
   <footer class="site-footer" id="contact">
     <div class="wrap">
@@ -120,11 +123,7 @@ function Get-Footer {
         <div>
           <h3 class="serif">$(Esc $t.footer.contactsTitle)</h3>
           <p><a href="mailto:$email">$email</a></p>
-        </div>
-        <div>
-          <p>$(Esc $t.site.phone)</p>
-          <p><a href="https://instagram.com/">$inst</a></p>
-        </div>
+$extra        </div>
         <div class="subscribe">
           <h3 class="serif">$(Esc $t.home.subscribeTitle)</h3>
           <form action="#" method="post">
