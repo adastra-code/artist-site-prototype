@@ -7,10 +7,14 @@
     Запуск:
       .\deploy-pages.ps1 -BaseUrl "https://adastra-code.github.io/artist-site-prototype"
       .\deploy-pages.ps1 -SkipBuild        # только переопубликовать текущий dist/
+
+    По умолчанию сайт публикуется ЗАКРЫТЫМ от поисковиков (черновик).
+    Открыть индексацию при запуске сайта: -Index
 #>
 param(
     [string]$BaseUrl = '',
-    [switch]$SkipBuild
+    [switch]$SkipBuild,
+    [switch]$Index
 )
 
 $ErrorActionPreference = 'Stop'
@@ -22,9 +26,11 @@ try { $url = (git remote get-url origin).Trim() } finally { Pop-Location }
 if (-not $url) { throw "не найден remote origin — сначала добавьте его" }
 
 if (-not $SkipBuild) {
-    Write-Host "Сборка..."
-    if ($BaseUrl) { & (Join-Path $here 'build.ps1') -BaseUrl $BaseUrl }
-    else { & (Join-Path $here 'build.ps1') }
+    $buildArgs = @{}
+    if ($BaseUrl) { $buildArgs['BaseUrl'] = $BaseUrl }
+    if (-not $Index) { $buildArgs['NoIndex'] = $true }
+    Write-Host ("Сборка... (индексация: " + $(if ($Index) { 'открыта' } else { 'закрыта' }) + ")")
+    & (Join-Path $here 'build.ps1') @buildArgs
 }
 
 $dist = Join-Path $here 'dist'
@@ -49,3 +55,4 @@ finally {
 }
 
 Write-Host "Опубликовано: ветка gh-pages в $url"
+if (-not $Index) { Write-Host "Сайт закрыт от индексации (robots.txt: Disallow: /, meta robots: noindex)." }

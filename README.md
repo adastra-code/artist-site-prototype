@@ -12,6 +12,10 @@
 - **Репозиторий:** <https://github.com/adastra-code/artist-site-prototype>
 - **Скачать ZIP:** <https://github.com/adastra-code/artist-site-prototype/archive/refs/heads/master.zip>
 
+> Прототип закрыт от индексации (черновик): `robots.txt` → `Disallow: /`
+> и `noindex, nofollow` на всех страницах. Открыть перед запуском:
+> `site\deploy-pages.ps1 ... -Index`.
+
 ## Структура
 
 | Файл | Что внутри |

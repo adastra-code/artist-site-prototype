@@ -15,7 +15,8 @@
 #>
 param(
     [string]$Out = '',
-    [string]$BaseUrl = 'https://example.ru'
+    [string]$BaseUrl = 'https://example.ru',
+    [switch]$NoIndex
 )
 
 $ErrorActionPreference = 'Stop'
@@ -142,6 +143,7 @@ $extra        </div>
 
 function Get-Head([string]$title, [string]$desc, [string]$canonicalPath, [string]$ogImage) {
     $full = "$BaseUrl/$canonicalPath"
+    $robotsMeta = if ($NoIndex) { 'noindex, nofollow' } else { 'index, follow' }
     return @"
 <!doctype html>
 <html lang="$($t.lang)">
@@ -150,7 +152,7 @@ function Get-Head([string]$title, [string]$desc, [string]$canonicalPath, [string
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>$title</title>
 <meta name="description" content="$desc">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="$robotsMeta">
 <link rel="canonical" href="$full">
 <!-- hreflang: добавится вместе с en/zh, когда появятся /en/ и /zh/ -->
 <meta property="og:type" content="website">
@@ -452,14 +454,19 @@ $(Get-Footer)
 }
 
 # --- robots.txt и sitemap.xml
-$robots = "User-agent: *`nAllow: /`n`nSitemap: $BaseUrl/sitemap.xml`n"
-Save-Page 'robots.txt' $robots
-
 $pages = @('index.html', 'works.html', 'available.html', 'about.html') + @($works | ForEach-Object { "$($_.slug).html" })
-$urls = ''
-foreach ($p in $pages) { $urls += "  <url><loc>$BaseUrl/$p</loc></url>`n" }
-$sitemap = "<?xml version=""1.0"" encoding=""UTF-8""?>`n<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"">`n$urls</urlset>`n"
-Save-Page 'sitemap.xml' $sitemap
+
+if ($NoIndex) {
+    # Черновик: закрыт от поисковиков. sitemap не создаём — он бы рекламировал URL.
+    Save-Page 'robots.txt' "User-agent: *`nDisallow: /`n"
+}
+else {
+    Save-Page 'robots.txt' "User-agent: *`nAllow: /`n`nSitemap: $BaseUrl/sitemap.xml`n"
+    $urls = ''
+    foreach ($p in $pages) { $urls += "  <url><loc>$BaseUrl/$p</loc></url>`n" }
+    $sitemap = "<?xml version=""1.0"" encoding=""UTF-8""?>`n<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"">`n$urls</urlset>`n"
+    Save-Page 'sitemap.xml' $sitemap
+}
 
 # ------------------------------------------------------------------ итог
 
@@ -467,3 +474,4 @@ $files = Get-ChildItem $outAbs -Recurse -File
 "Собрано: $($files.Count) файлов, {0:N0} КБ" -f (($files | Measure-Object Length -Sum).Sum / 1KB)
 "Страниц: $($pages.Count); работ: $($works.Count); доступных: $($available.Count)"
 "BaseUrl: $BaseUrl"
+"Индексация: " + $(if ($NoIndex) { 'закрыта (noindex + Disallow: /)' } else { 'открыта' })
