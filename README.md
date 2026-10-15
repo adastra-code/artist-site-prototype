@@ -22,6 +22,7 @@
 |---|---|
 | `docs/analysis-artist-websites.md` | Основной аналитический отчёт |
 | `docs/site-build-playbook.md` | План сборки сайта: один домен, два пути, главная с галерейным упором |
+| `docs/next-steps.md` | Что осталось сделать: контент, фото, доработки, запуск |
 | `site/` | Прототип сайта (статика, RU): `build.ps1`, `content/`, `dist/` |
 | `assets/works/` | Фото работ: оригиналы, WebP-версии и каталог `inventory.csv` |
 | `docs/data/sites-technical.csv` | Технические замеры сайтов (доступность, платформа, магазин, SEO) |
