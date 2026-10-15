@@ -6,6 +6,12 @@
 
 **Дата сбора данных:** 15.10.2026
 
+## Публикация
+
+- **Живой прототип сайта:** <https://adastra-code.github.io/artist-site-prototype/>
+- **Репозиторий:** <https://github.com/adastra-code/artist-site-prototype>
+- **Скачать ZIP:** <https://github.com/adastra-code/artist-site-prototype/archive/refs/heads/master.zip>
+
 ## Структура
 
 | Файл | Что внутри |

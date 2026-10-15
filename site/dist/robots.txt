@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://example.ru/sitemap.xml
+Sitemap: https://adastra-code.github.io/artist-site-prototype/sitemap.xml

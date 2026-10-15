@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://example.ru/index.html</loc></url>
-  <url><loc>https://example.ru/works.html</loc></url>
-  <url><loc>https://example.ru/available.html</loc></url>
-  <url><loc>https://example.ru/about.html</loc></url>
-  <url><loc>https://example.ru/work-01.html</loc></url>
-  <url><loc>https://example.ru/work-04.html</loc></url>
-  <url><loc>https://example.ru/work-10.html</loc></url>
-  <url><loc>https://example.ru/work-11.html</loc></url>
-  <url><loc>https://example.ru/work-12.html</loc></url>
-  <url><loc>https://example.ru/work-09.html</loc></url>
-  <url><loc>https://example.ru/work-14.html</loc></url>
-  <url><loc>https://example.ru/work-15.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/index.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/works.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/available.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/about.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/work-01.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/work-04.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/work-10.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/work-11.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/work-12.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/work-09.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/work-14.html</loc></url>
+  <url><loc>https://adastra-code.github.io/artist-site-prototype/work-15.html</loc></url>
 </urlset>

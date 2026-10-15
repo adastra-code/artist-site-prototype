@@ -25,6 +25,21 @@
 .\serve.ps1                                   # http://127.0.0.1:8123/
 ```
 
+## Публикация (GitHub Pages)
+
+Прототип опубликован: <https://adastra-code.github.io/artist-site-prototype/>
+
+Повторная публикация после правок:
+
+```powershell
+.\deploy-pages.ps1 -BaseUrl "https://adastra-code.github.io/artist-site-prototype"
+```
+
+Скрипт собирает `dist/` и кладёт его содержимое в ветку `gh-pages`
+(плюс `.nojekyll`), из которой GitHub Pages отдаёт сайт. При переезде на
+собственный домен — запустить с новым `-BaseUrl`, иначе `canonical`
+и `sitemap.xml` будут указывать на старый адрес.
+
 ## Что где менять
 
 - **Тексты, кнопки, разделы** → `content/ru.json`.
