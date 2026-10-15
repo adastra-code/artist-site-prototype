@@ -154,14 +154,23 @@ dl.spec dd { margin: 0; }
 .prose { max-width: 68ch; }
 .prose p { font-size: 1.05rem; }
 .prose ul { padding-left: 1.1em; color: var(--muted); }
+.prose h2 { margin-top: 1.9em; font-size: 1.25rem; }
+.prose .updated { color: var(--muted); font-size: .88rem; margin-bottom: 2em; }
 
 /* ---------- subscribe + footer ---------- */
 
 .subscribe form { display: flex; gap: 10px; flex-wrap: wrap; max-width: 460px; }
-.subscribe input {
+.subscribe input[type="email"] {
   flex: 1 1 220px; padding: 12px 14px; border: 1px solid var(--line);
   background: var(--surface); font: inherit; color: inherit;
 }
+.subscribe .consent {
+  flex: 1 1 100%; display: flex; gap: 8px; align-items: flex-start;
+  font-size: .82rem; color: var(--muted); line-height: 1.5; margin: 2px 0 4px;
+}
+.subscribe .consent input[type="checkbox"] { margin: 3px 0 0; flex: 0 0 auto; }
+.subscribe .consent a { color: var(--muted); }
+.subscribe .consent a:hover { color: var(--ink); }
 .subscribe button {
   padding: 12px 22px; border: 1px solid var(--ink); background: transparent;
   font: inherit; cursor: pointer; transition: background .18s ease, color .18s ease;

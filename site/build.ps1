@@ -63,6 +63,42 @@ function Esc([string]$s) {
     return ($s -replace '&', '&amp;' -replace '<', '&lt;' -replace '>', '&gt;' -replace '"', '&quot;')
 }
 
+function Inline([string]$s) {
+    $e = Esc $s
+    $e = $e -replace '\[([^\]]+)\]\(([^)]+)\)', '<a href="$2">$1</a>'
+    $e = $e -replace '\*\*(.+?)\*\*', '<strong>$1</strong>'
+    return $e
+}
+
+# Мини-разметка для длинных текстов (политика и т.п.):
+#   ## Заголовок   -> <h2>
+#   - пункт        -> <ul><li>
+#   остальная строка -> <p>  (**жирный**, [текст](ссылка) поддерживаются)
+function Convert-Md([string[]]$lines) {
+    $html = ''
+    $inList = $false
+    foreach ($raw in $lines) {
+        $line = $raw.TrimEnd()
+        if ($line -match '^#{1,6}\s+(.*)$') {
+            if ($inList) { $html += "        </ul>`n"; $inList = $false }
+            $html += "        <h2>" + (Inline $matches[1]) + "</h2>`n"
+        }
+        elseif ($line -match '^-\s+(.*)$') {
+            if (-not $inList) { $html += "        <ul>`n"; $inList = $true }
+            $html += "          <li>" + (Inline $matches[1]) + "</li>`n"
+        }
+        elseif ($line -match '^\s*$') {
+            if ($inList) { $html += "        </ul>`n"; $inList = $false }
+        }
+        else {
+            if ($inList) { $html += "        </ul>`n"; $inList = $false }
+            $html += "        <p>" + (Inline $line) + "</p>`n"
+        }
+    }
+    if ($inList) { $html += "        </ul>`n" }
+    return $html
+}
+
 function MetaLine($w) {
     $parts = @()
     if ($w.year)      { $parts += $w.year }
@@ -130,11 +166,16 @@ $extra        </div>
           <form action="#" method="post">
             <label class="skip" for="email">$(Esc $t.home.subscribePlaceholder)</label>
             <input id="email" type="email" name="email" placeholder="$(Esc $t.home.subscribePlaceholder)" required>
+            <label class="consent">
+              <input type="checkbox" name="consent" required>
+              <span>$(Esc $t.consent.text) <a href="privacy.html">$(Esc $t.consent.linkText)</a>.</span>
+            </label>
             <button type="submit">$(Esc $t.home.subscribeCta)</button>
           </form>
         </div>
       </div>
       <p class="legal">$(Esc $t.footer.rights)</p>
+      <p class="legal"><a href="privacy.html">$(Esc $t.footer.privacyLabel)</a></p>
       <p class="note">$(Esc $t.footer.langNote)</p>
     </div>
   </footer>
@@ -435,6 +476,33 @@ $(Get-Footer)
 "@
 Save-Page 'about.html' $aboutBody
 
+# --- privacy (обработка персональных данных)
+$privacyPath = Join-Path $content 'privacy.md'
+if (-not (Test-Path $privacyPath)) { throw "нет content/privacy.md" }
+$privacyRaw = Get-Content $privacyPath -Raw -Encoding UTF8
+$privacyRaw = $privacyRaw.Replace('{{SITE_URL}}', $BaseUrl)
+$privacyRaw = $privacyRaw.Replace('{{EMAIL}}', $t.site.email)
+$privacyRaw = $privacyRaw.Replace('{{NAME}}', $t.site.name)
+$privacyHtml = Convert-Md ($privacyRaw -split "`r?`n")
+
+$privacyBody = @"
+$(Get-Head "$(Esc $t.privacy.title) — $(Esc $t.site.name)" "$(Esc $t.privacy.description)" 'privacy.html' '')
+<body>
+$(Get-Header 'privacy.html')
+  <main id="content" class="fade-in">
+    <section style="border-top:0">
+      <div class="wrap prose">
+        <h1>$(Esc $t.privacy.title)</h1>
+        <p class="updated">$(Esc $t.privacy.updatedLabel): $(Esc $t.privacy.updated)</p>
+$privacyHtml      </div>
+    </section>
+  </main>
+$(Get-Footer)
+</body>
+</html>
+"@
+Save-Page 'privacy.html' $privacyBody
+
 # --- work pages
 for ($i = 0; $i -lt $works.Count; $i++) {
     $w = $works[$i]
@@ -454,7 +522,7 @@ $(Get-Footer)
 }
 
 # --- robots.txt и sitemap.xml
-$pages = @('index.html', 'works.html', 'available.html', 'about.html') + @($works | ForEach-Object { "$($_.slug).html" })
+$pages = @('index.html', 'works.html', 'available.html', 'about.html', 'privacy.html') + @($works | ForEach-Object { "$($_.slug).html" })
 
 if ($NoIndex) {
     # Черновик: закрыт от поисковиков. sitemap не создаём — он бы рекламировал URL.
